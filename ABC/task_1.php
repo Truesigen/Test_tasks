@@ -1,22 +1,15 @@
-<?php
 
-$pdo = new PDO('pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-//$sql = 'SELECT click.* FROM click JOIN actions ON click.id = actions.click_id';
-//$sql = 'SELECT click.* FROM click LEFT JOIN actions ON click.id = actions.click_id WHERE actions.event_date IS NULL';
-//$sql = 'SELECT * FROM click WHERE id IN (SELECT click_id FROM actions)';
-//$sql = 'SELECT * FROM click WHERE id NOT IN (SELECT click_id FROM actions)';
+написать 2 SQL запроса:
+1. Выбрать клики у которых точно есть actions
+2. Выбрать клики у которых точно нету actions
 
-$stmt = $pdo->prepare($sql);
+1.1. $sql = 'SELECT click.* FROM click JOIN actions ON click.id = actions.click_id';
 
-try {
-    $stmt->execute();
-} catch(PDOException $ex) {
-    echo $ex->getMessage();
-}
+1.2. $sql = 'SELECT * FROM click WHERE id IN (SELECT click_id FROM actions)';
 
-foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $x) {
-    var_dump($x);
-    echo '</br>';
-}
+2.1. $sql = 'SELECT click.* FROM click LEFT JOIN actions ON click.id = actions.click_id WHERE actions.event_date IS NULL';
+
+2.2. $sql = 'SELECT * FROM click WHERE id NOT IN (SELECT click_id FROM actions)';
+
+
