@@ -33,6 +33,7 @@ $data = [
 
 $dataTitles = array_keys($data[0]);
 
+
 $stream = fopen('file.csv', 'w+');
 
 fputcsv($stream, $dataTitles);
