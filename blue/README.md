@@ -7,12 +7,17 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About project
-##  deploy and settings
+# About project
 
+```bash
+null
+```
+---
 # download project
 https://download-directory.github.io/?url=https://github.com/Truesigen/Test_tasks/tree/main/blue
 
+---
+#  install and settings
 ```bash
 # install php dependencies
 composer install
@@ -22,6 +27,52 @@ cp .env.example .env
 
 # generate laravel key
 php artisan key:generate
+
+# setup db settings in .env
+
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=?
+DB_USERNAME=?
+DB_PASSWORD=?
+
+QUEUE_CONNECTION=redis
+CACHE_DRIVER=redis
+
+# migrate and seed db
+php artisan migrate --seed
 ```
+---
+# Authorization
+
+request:
+```bash
+curl -X POST http://localhost/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@test.com","password":"password"}'
+```
+
+response:
+```json
+{
+  "token": "YOUR_API_TOKEN"
+}
+```
+
+use token:
+
+```http
+Authorization: Bearer YOUR_API_TOKEN
+```
+
+---
+
 
 ->>>>>>>>>
