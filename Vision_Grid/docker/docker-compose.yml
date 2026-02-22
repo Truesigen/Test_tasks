@@ -1,0 +1,43 @@
+services:
+
+  php:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    container_name: php
+    volumes:
+      - ../backend:/var/www
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "127.0.0.1:80:80"
+    container_name: nginx
+    volumes:
+      - ../backend:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - app-network
+
+  ui:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/ui/Dockerfile
+    container_name: ui
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
